@@ -1,22 +1,18 @@
-/*document.getElementById('submitSum').addEventListener('click', () => {
-	
-});*/
+document.getElementById('submit').addEventListener('click', function () {
+	submitSum();
+});
 
+// récupère la some et véerifie la validité
 function submitSum(){
-	var sum = Number(document.getElementById("sum").value)*100;
+	let sum = Number(document.getElementById("sum").value)*100;
 
-	if (checkPositive(sum)) {
-		var stock = generateStock();
+	if (Number.isInteger(sum) && sum>0) {
+		let stock = generateStock();
 		calculate(stock, sum);
 	} else {
-		document.getElementById("finalResult").innerHTML = "Veuillez entre un nombre positif avec maximum 2 décimal. ex: 745.23"
+		alert("Veuillez entrer un nombre positif avec maximum 2 décimales. ex: 745.23");
 	}
 }
-
-function checkPositive(num) {
-	return (num>0 && Math.floor(num) === num);
-} 
-
 
 //chargement du stock 
 function generateStock() {
@@ -41,20 +37,18 @@ function generateStock() {
 	for (let i = 0; i < stock.length; i++) {
 		let item = stock[i];
 		let stockValue = Number(document.getElementById("stock"+item.name).innerHTML);
-		// VERIFIER  value == number !!!!
-		//if value != number. alors  afficher valeur de stock incorrect !!! 
 		item.stockValue = stockValue;
-		
 	}
-	
+
 	return stock;
 }
 
+// Décompose la somme et affiche le résultat
 function calculate(stock, sum) {
-	var text = '';
+	let text = '';
 	for (let i = 0; i < stock.length ; i++) {
 		let item = stock[i];
-		var quantity = Math.floor(sum / item.value);
+		let quantity = Math.floor(sum / item.value);
 
 		if (item.stockValue > quantity) {
 			item.quantity = quantity;
@@ -66,7 +60,6 @@ function calculate(stock, sum) {
 		if (item.quantity > 0) {
 			text = text.concat(document.getElementById("name"+item.name).innerHTML+" : " + item.quantity +"<br>");
 		}
-	
 	}	
 
 	if (sum > 0) {
@@ -74,6 +67,4 @@ function calculate(stock, sum) {
 	} else {
 		document.getElementById("finalResult").innerHTML = text +" <br> Reste  : "+(sum/100);
 	}
-
 }
-	
