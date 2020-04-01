@@ -1,0 +1,104 @@
+#keyboard {
+	background-color: silver;
+	width: 500px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-around;
+}
+
+button {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	margin: 5px 10px;
+	padding: 0;
+	display: inline-block;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+.color1 {
+	background-color: yellow;
+}
+
+.color2 {
+	background-color: orange;
+}
+
+.color3 {
+	background-color: red;
+}
+
+.color4 {
+	background-color: cyan;
+}
+
+.color5 {
+	background-color: blue;
+}
+
+.color6 {
+	background-color: violet;
+}
+
+.color7 {
+	background-color: green;
+}
+
+.color0 {
+	background-color: transparent;
+}
+
+.colorWhite {
+	background-color: white;
+}
+
+.colorBlack {
+	background-color: black;
+}
+
+button.clear {
+	background-color: white;
+}
+
+table {
+	background-color: #eee;
+	border: 1px solid silver; 
+	margin: 50px auto;
+	min-width:500px;
+}
+
+td {
+	height: 60px;
+	background-color: silver;
+	margin: 2px;
+	border: 1px solid black;
+}
+
+td.step {
+	width: 60px;
+}
+td.space {
+	width: 15px;
+}
+td.seq, td.result {
+	width: 260px;
+}
+
+td > div {
+	border: 2px solid white;
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	margin: 5px 10px;
+	padding: 0;
+	display: inline-block;
+	text-align: center;
+	line-height: 36px;
+}
+
+.disabled {
+	opacity = 0.2;
+}
