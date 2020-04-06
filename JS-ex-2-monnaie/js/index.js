@@ -1,70 +1,76 @@
-document.getElementById('submit').addEventListener('click', function () {
+// Stockage des values des différentes coupures (50000 = 500 €, 1 = 1 cent)
+const values = [
+	50000, 20000, 10000, 
+	5000, 2000, 1000,
+	500, 200, 100,
+	50, 20, 10,
+	5, 2, 1
+];
+const stock = generateStock(); // tableau avec les différents stocks de coupures
+let sum = 0;
+let reste;
+let quantities ; // Stokage des diiférentes quantités de coupures nécessaires
+init();
+
+document.getElementById('submit').addEventListener('click', function (e) {
+	e.preventDefault();
 	submitSum();
+	return false;
 });
 
-// récupère la some et véerifie la validité
+// récupère la somme et vérifie la validité
 function submitSum(){
-	let sum = Number(document.getElementById("sum").value)*100;
-
-	if (Number.isInteger(sum) && sum>0) {
-		let stock = generateStock();
-		calculate(stock, sum);
+	init();
+	quantities = [];
+	sum = Number(document.getElementById('sum').value)*100;
+	reste = sum;
+	if (Number.isInteger(sum) && sum > 0) {
+		calculate();
 	} else {
 		alert("Veuillez entrer un nombre positif avec maximum 2 décimales. ex: 745.23");
 	}
 }
 
-//chargement du stock 
+//création d'un stock aléatoire 
 function generateStock() {
-	let stock = [
-		{	value : 50000, 	name : 'Euro500'},
-		{	value : 20000, 	name : 'Euro200'},
-		{	value : 10000, 	name : 'Euro100'},
-		{	value : 5000, 	name : 'Euro50'},
-		{	value : 2000, 	name : 'Euro20'},
-		{	value : 1000, 	name : 'Euro10'},
-		{	value : 500, 	name : 'Euro5'},
-		{	value : 200, 	name : 'Euro2'},
-		{	value : 100, 	name : 'Euro1'},
-		{	value : 50, 	name : 'Cent50'},
-		{	value : 20, 	name : 'Cent20'},
-		{	value : 10, 	name : 'Cent10'},
-		{	value : 5, 		name : 'Cent5'},
-		{	value : 2, 		name : 'Cent2'},
-		{	value : 1, 		name : 'Cent1'},
-	];
-
-	for (let i = 0; i < stock.length; i++) {
-		let item = stock[i];
-		let stockValue = Number(document.getElementById("stock"+item.name).innerHTML);
-		item.stockValue = stockValue;
+	let arr = [];
+	for (let i = 0; i < values.length; i++) {
+		let item = Math.floor(Math.random()*21); // nombre aléatoire entre 0 et 20;
+		arr.push(item);
+		document.getElementById('item'+values[i]).getElementsByClassName('stock')[0].innerHTML = item;
 	}
 
-	return stock;
+	return arr;
 }
 
-// Décompose la somme et affiche le résultat
-function calculate(stock, sum) {
+// Décomposition la somme et affichage le résultat
+function calculate() {
 	let text = '';
-	for (let i = 0; i < stock.length ; i++) {
-		let item = stock[i];
-		let quantity = Math.floor(sum / item.value);
+	let qte = 0;
+	let oTr;
 
-		if (item.stockValue > quantity) {
-			item.quantity = quantity;
-		} else {
-			item.quantity = item.stockValue;
-		}
-		sum -= item.quantity*item.value;
-		document.getElementById("result"+item.name).innerHTML = item.quantity ;
-		if (item.quantity > 0) {
-			text = text.concat(document.getElementById("name"+item.name).innerHTML+" : " + item.quantity +"<br>");
+	for (let i = 0; i < stock.length ; i++) {
+		qte = Math.floor(reste / values[i]); // partie entière de la division
+		quantities.push(Math.min(stock[i], qte));
+		reste -= quantities[i]*values[i];
+		oTr = document.getElementById('item'+values[i]);
+		oTr.getElementsByClassName('result')[0].innerHTML = quantities[i];
+		if (quantities[i] > 0) {
+			text = text.concat(oTr.getElementsByClassName('name')[0].innerHTML + " : " + quantities[i] +"<br>");
 		}
 	}	
 
-	if (sum > 0) {
-		document.getElementById("finalResult").innerHTML = "Il n'y a pas assez d'argent dans le stock !";
+	if (reste > 0) {
+		document.getElementById("finalResult").innerHTML = "Il n'y a pas assez d'argent dans le stock ! <br> Stock = "+((sum-reste)/100)+"<br>Reste = "+(reste/100);
 	} else {
-		document.getElementById("finalResult").innerHTML = text +" <br> Reste  : "+(sum/100);
+		document.getElementById("finalResult").innerHTML = text;
+	}
+}
+
+// initialisation des résultats
+function init() {
+	document.getElementById("finalResult").innerHTML = '';
+	for (let i = 0; i < values.length ; i++) {
+		document.getElementById('item'+values[i]).getElementsByClassName('result')[0].innerHTML = '';
 	}
 }

@@ -1,21 +1,22 @@
 let list = [];
 
-document.getElementById('reset').addEventListener('click', reset);
-document.getElementById('submit').addEventListener('click', function(e) {
-	e.preventDefault();
+document.getElementById('submit').addEventListener('click', () => {
 	submitNum();
-	return false;
+});
+
+document.getElementById('reset').addEventListener('click', () => {
+	reset();
 });
 
 // récupère la valeur et vérifie sa validité
 function submitNum() {
-	let num = document.getElementById('num').value; 
+	let num = parseFloat(document.getElementById("num").value); 
 
-	if (num !== '' && Number.isInteger(Number(num))) {
-		list.push(Number(num));
+	if (!isNaN(num) && Number.isInteger(num)) {
+		list.push(num);
 		calculate(num);
 	} else {
-		alert('Le valeur entrée n\'est pas un nombre entier');
+		alert("Le valeur entrée n'est pas un nombre entier");
 	}
 }
 
@@ -23,18 +24,16 @@ function submitNum() {
 function calculate(num) {
 	// déclaration
 	let indexSeq = 0;		// index de la séquence en cours
-	let lengthSeq = 0;		// longueur de la séquence en cours
+	let lengthSeq = 0;		// longueur de la sequance en cours
 	let indexSeqMax = 0;	// index de la séquence la plus longue
-	let lengthSeqMax = 0;	// longueur de la séquence la plus longue
+	let lengthSeqMax = 0;	// longueur de la sequance la plus longue
 	let sum = 0;
 
 	//calcul
-	for (let i = 0 ; i < list.length; i++) {
-		let lastValue = (i == 0) ? null : list[i-1];
-		
+	for (let i = 0 ;i < list.length; i++) {
 		sum += list[i];
-
-		if (lastValue == null || lastValue <= list[i]) {
+		let lastValue = (i == 0) ? 0 : list[i-1];
+		if (lastValue <= list[i]) {
 			// on insère le nombre dans la séquence en cours 
 			lengthSeq++;
 
@@ -50,17 +49,14 @@ function calculate(num) {
 		}
 	}
 
-	let result = [ 
-		list.length, 
-		sum, 
-		Math.max(...list),  
-		Math.min(...list), 
-		Math.round(100*sum/list.length)/100, 
-		list.join(', '), 
-		getSequency(list, indexSeqMax, lengthSeqMax).join(', '),
-	];
-
-	showResult(result);
+	//affichage 
+	document.getElementById("quantity").innerHTML = list.length;
+	document.getElementById("sum").innerHTML = sum;
+	document.getElementById("max").innerHTML = Math.max(...list);
+	document.getElementById("min").innerHTML = Math.min(...list);
+	document.getElementById("average").innerHTML = Math.round(100*sum/list.length)/100;
+	document.getElementById("list").innerHTML = list.join(', ');
+	document.getElementById("sequency").innerHTML = getSequency(list, indexSeqMax, lengthSeqMax).join(', ');
 }
 
 // récupération de la séquence la plus longue
@@ -69,16 +65,16 @@ function getSequency(arr, index, length) {
 }
 
 // réinitialisation
-function reset() {
-	let result = new Array(7).fill(0);
-	showResult(result);
-}
 
-//affichage des résultats
-function showResult(result) {
-	let names = ['quantity', 'sum', 'max', 'min', 'average', 'list', 'sequency'];
-	document.getElementById('num').value = '';
-	names.forEach(function(name, index) {
-		document.getElementById(name).innerHTML = result[index];
-	}); 
-}
+function reset() {
+	list = [];
+
+	document.getElementById("num").value = "";
+	document.getElementById("quantity").innerHTML =0;
+	document.getElementById("sum").innerHTML = 0;
+	document.getElementById("max").innerHTML = 0;
+	document.getElementById("min").innerHTML = 0;
+	document.getElementById("average").innerHTML =0;
+	document.getElementById("list").innerHTML = 0;
+	document.getElementById("sequency").innerHTML = 0;
+} 
