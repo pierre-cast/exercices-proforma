@@ -25,7 +25,7 @@ document.forms[2].ch1.addEventListener('keydown', () => {
 });
 
 // Exercice 4
-document.forms[3].ch1.addEventListener('click', () => {
+document.forms[3].cb1.addEventListener('click', () => {
     if (document.forms[3].cb1.checked) {
     	document.forms[3].ch1.type = 'input';
     } else {
@@ -83,14 +83,14 @@ document.forms[8].b2.addEventListener('click', () => {
 });
 
 // Exercice 10
-document.forms[9].s1.addEventListener('click', () => {
+document.forms[9].s1.addEventListener('change', () => {
 	document.forms[9].ch1.value = document.forms[9].s1.selectedOptions[0].value;
 	document.forms[9].ch2.value = document.forms[9].s1.selectedOptions[0].innerHTML;
 });
 
 // Exercice 11
 document.forms[10].s1.addEventListener('click', () => {
-	let oSelect = document.forms[10].s1.selectedOptions;
+	const oSelect = document.forms[10].s1.selectedOptions;
 	let texts = [];
 	let values = [];
 	for (let i = 0; i < oSelect.length; i++) {
@@ -101,10 +101,9 @@ document.forms[10].s1.addEventListener('click', () => {
 	document.forms[10].ch2.value = texts.join(', ');
 });
 
-
 // Exercice 12
 document.forms[11].gauche.addEventListener('click', () => {
-	let oInput = document.forms[11].getElementsByTagName('input');
+	const oInput = document.forms[11].getElementsByTagName('input');
 	let firstItem = oInput[0].value;
 	for (let i = 0; i < oInput.length-1; i++) {
 		oInput[i].value = oInput[i+1].value;
@@ -113,7 +112,7 @@ document.forms[11].gauche.addEventListener('click', () => {
 });
 
 document.forms[11].droite.addEventListener('click', () => {
-	let oInput = document.forms[11].getElementsByTagName('input');
+	const oInput = document.forms[11].getElementsByTagName('input');
 	let lastItem = oInput[oInput.length-1].value;
 	for (let i = oInput.length-1; i > 0; i--) {
 		oInput[i].value = oInput[i-1].value;
@@ -132,8 +131,8 @@ document.forms[12].gauche.addEventListener('click', () => {
 });
 
 document.forms[12].droite.addEventListener('click', () => {
-	let oS1 = document.forms[12].s1;
-	let oS2 = document.forms[12].s2;
+	const oS1 = document.forms[12].s1;
+	const oS2 = document.forms[12].s2;
 	let oSelect1 = oS1.selectedOptions;
 
 	for (let i = oSelect1.length-1 ; i >= 0 ; i--) {
@@ -188,7 +187,7 @@ document.forms[15].ch1.addEventListener('focus', () => {
 });
 
 // Exercice 17
-let oEx17 =  document.getElementById('ex17')
+const oEx17 =  document.getElementById('ex17')
 let oCarre17 = oEx17.getElementsByClassName('carre'); 
 
 for (let i = 0; i < oCarre17.length; i++) {
@@ -200,7 +199,7 @@ for (let i = 0; i < oCarre17.length; i++) {
 }
 
 // Exercice 18
-let oEx18 =  document.getElementById('ex18')
+const oEx18 =  document.getElementById('ex18')
 let oCarre18 = oEx18.getElementsByClassName('carre'); 
 
 for (let i = 0; i < oCarre18.length; i++) {
@@ -214,10 +213,10 @@ for (let i = 0; i < oCarre18.length; i++) {
 }
 
 // Exercice 19
-let oEx19 =  document.getElementById('ex19')
-let oGauche = oEx19.getElementsByClassName('gauche')
+const oEx19 =  document.getElementById('ex19')
+const oGauche = oEx19.getElementsByClassName('gauche')
 let oImg = oGauche[0].getElementsByTagName('img'); 
-let oDroite = document.getElementById('idroite');
+const oDroite = document.getElementById('idroite');
 oDroite.setAttribute('draggable',true);
 let drapImg ;
 for (let i = 0; i < oImg.length; i++) {
