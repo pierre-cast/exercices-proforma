@@ -9,15 +9,15 @@ let freeId = 0;
 
 /*  -- event -- */
 submit.addEventListener('click', function(e) {
-	if (input.value !== undefined) {
+	if (input.value !== '') {
 		createItem();
 	} else {
 		alert ('Veuillez insérer un libellé dans le champ');
 	}
 	e.preventDefault();
-});
-console.log(filters);
-for (let i = 0; i< filters.length; i++ ) {
+}); 
+
+for (let i = 0; i < filters.length; i++ ) {
 	filters[i].addEventListener('click', function (){
 		filterList(this.id);
 	})
@@ -33,7 +33,7 @@ function createItem() {
 		libelle: input.value,
 		id: newId,
 	}
-	
+	input.value = '';
 	addItem(todo);
 }
 
@@ -50,6 +50,9 @@ function addItem(todo) {
 	let item = document.createElement('li');
 	item.id = todo.id;
 	item.setAttribute('data-status', 'undone');
+	if (checkFilterActive() === 'complete') {
+		item.classList.add('hide');
+	}
 
 	item.appendChild(createButtonDone());
 	item.appendChild(createInput(todo));
@@ -59,10 +62,12 @@ function addItem(todo) {
 	updateTotal();
 }
 
+// mise à jour du nombre total d'élément
 function updateTotal() {
-	document.getElementById('itemsLeft').innerHTML = list.children.length;
+	document.getElementById('itemsLeft').innerHTML = list.children.length +" élément"+((list.children.length<=1 ) ? '': 's')+" dans la liste";
 }
 
+// génération du button Remove
 function createButtonRemove() {
 	let remove = document.createElement('button');
 	let removeText = document.createTextNode("X");
@@ -70,19 +75,21 @@ function createButtonRemove() {
 	remove.addEventListener('click', function () {
 		removeAction(this.parentNode);
 	});
+
 	return remove;
 }
 
+// génération du button done
 function createButtonDone() {
 	let done = document.createElement('button');
-	let doneText = document.createTextNode("O");
-	done.appendChild(doneText);
 	done.addEventListener('click', function () {
 		doneAction(this.parentNode);
 	});
+
 	return done;
 }
 
+// génération de l'input
 function createInput(todo) {
 	let input = document.createElement('input');
 	input.setAttribute('type', 'text');
@@ -90,9 +97,11 @@ function createInput(todo) {
 	input.addEventListener('change', function () {
 		modifyAction(this.parentNode);
 	});
+
 	return input;
 }
 
+// suppression d'un élément unique (X)
 function removeAction(item) {
 	// modifie le DOM
 	list.removeChild(item);
@@ -103,19 +112,27 @@ function removeAction(item) {
 
 }
 
+// modification du status (done/undone)
 function doneAction(item) {
 	// modifie le DOM
-	item.setAttribute('data-status', 'done');
-	item.done = true;
+	let status =  item.getAttribute('data-status');
+	if (status === 'done') {
+		item.setAttribute('data-status', 'undone');
+		item.done = false;
+	} else {
+		item.setAttribute('data-status', 'done');
+		item.done = true;
+	}
 
 	// modifie la liste
 	listArr.forEach(x => {
 		if (x.id === item.id) {
-			x.done = true;
+			x.done = (status === 'done') ? false : true;
 		}
 	});
 }
 
+// modification du libellé
 function modifyAction(item) {
 	// modifie la liste
 	listArr.forEach(x => {
@@ -125,43 +142,74 @@ function modifyAction(item) {
 	});
 }
 
-function clearAction() {	
+// suppression des todo realisé
+function clearAction() {
+	
 	// modifie le DOM
 	listArr = listArr.filter(x => x.done === false);
 	
 	// modifie la liste
-	for (let item of list.children) {
-		console.log(item);
-		if (item.getAttribute('data-status') === 'done') {
-			list.removeChild(item); 
+	for (let i = list.children.length-1; i >=0 ; i--) {
+		if (list.children[i].getAttribute('data-status') === 'done') {
+			list.removeChild(list.children[i]);	
 		}
 	}
+	
 	updateTotal();
 }
 
+// indique quel filtre est actif
+function checkFilterActive() {
+	for (let filter of filters) {
+		if (filter.classList.contains('active')) {
+			
+			return filter.id;
+		}
+	}
+
+	return false;
+}
+
+// filtrage de la liste
 function filterList(what) {
+	// modifier le filter actif
+	for (let i = 0; i < 3; i++) {
+		filters[i].classList.remove('active');
+	}
+	switch (what) {
+		case 'complete':
+			filters[2].classList.add('active');
+			break;
+		case 'active':
+			filters[1].classList.add('active');
+			break;
+		default: 
+			filters[0].classList.add('active');
+			break;
+	}
+
+	// modifier la liste
 	let status;
-	
 	for (let item of list.children) {
 		status = item.getAttribute('data-status');
+		
 		switch (what) {
 			case 'complete':
 				if (status === 'done') {
-					item.style.display = 'block';
+					item.classList.remove('hide');
 				} else {
-					item.style.display = 'none';
+					item.classList.add('hide');
 				}
 				break;
 			case 'active':
-
 				if (status === 'undone') {
-					item.style.display = 'block';
+					item.classList.remove('hide');
 				} else {
-					item.style.display = 'none';
+					item.classList.add('hide');
 				}
 				break;
 			default: 
-				item.style.display = 'block';
+			item.classList.remove('hide');
 				break;
 		}
 	}

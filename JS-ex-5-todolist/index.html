@@ -2,29 +2,37 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 		<link rel="stylesheet" type="text/css" href="css/theme.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"> 
+	
 	</head>
 	<body>
-		<header>ToDO list</header>
-		<hr>
 		<main>
-			<form action="" method="" id="form">
-				<label for="input"></label>
-				<input type="text" placeholder="insérer" id="input">
-				<input type="submit" value="Insérer" id="submit">
-			</form>
-			<ul id="toDoList"></ul>
-		</main>
-		<hr>
-		<footer>
-			<div id="itemsLeft">0</div>
-			<div id="filter">
-				<button id="all" class="filter">All</button>
-				<button id="active" class="filter">Active</button>
-				<button id="complete" class="filter">Complete</button>
+			<header>
+				<h1>ToDO list</h1>
+				<div id="filter">
+					<button id="all" class="filter active">All</button>
+					<button id="active" class="filter">Active</button>
+					<button id="complete" class="filter">Complete</button>
+				</div>
+			</header>
+			<div id="content">
+				<form action="" method="" id="form">
+					<label for="input"></label>
+					<input type="text" placeholder="ajouter un élément" id="input">
+					<input type="submit" value=">" id="submit">
+				</form>
+				<ul id="toDoList">
+				</ul>
 			</div>
-			<button id="clearComplete">clear</button>
-		</footer>
+			<footer>
+				<div id="itemsLeft"></div>
+				<div></div>
+				<button id="clearComplete">clear</button>
+			</footer>
+		</main>
 		<script src="js/index.js"></script>
 	</body>
 </html>
