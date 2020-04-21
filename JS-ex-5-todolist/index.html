@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" type="text/css" href="css/theme.css">
+	</head>
+	<body>
+		<header>ToDO list</header>
+		<hr>
+		<main>
+			<form action="" method="" id="form">
+				<label for="input"></label>
+				<input type="text" placeholder="insérer" id="input">
+				<input type="submit" value="Insérer" id="submit">
+			</form>
+			<ul id="toDoList"></ul>
+		</main>
+		<hr>
+		<footer>
+			<div id="itemsLeft">0</div>
+			<div id="filter">
+				<button id="all" class="filter">All</button>
+				<button id="active" class="filter">Active</button>
+				<button id="complete" class="filter">Complete</button>
+			</div>
+			<button id="clearComplete">clear</button>
+		</footer>
+		<script src="js/index.js"></script>
+	</body>
+</html>
