@@ -1,0 +1,43 @@
+body {
+	font-family: "Roboto", Helvetica, Arial, sans-serif;
+}
+
+#boardgame {
+	border :3px solid black;
+	padding: 15px;
+	margin: 50px auto;
+}
+
+td {
+	margin: 5px;
+	width: 30px;
+	height: 30px;
+	background-color: silver;
+	text-align:center;
+	vertical-align: middle;
+}
+
+td.empty {
+	background-color: beige;	
+}
+td.bomb {
+	background-color: beige;
+	position: relative;
+}
+
+td.bomb:before {
+	content: ' ';
+	background-color: black;
+	border-radius: 50%;
+	
+	width: 20px;
+	height:20px;
+	display: block;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+}
+
+td.bomb.boum:before {
+	background-color:red ;
+}
